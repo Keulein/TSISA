@@ -1,0 +1,145 @@
+#include <iostream>
+
+#include <math.h>
+
+#include <vector>
+
+#include <algorithm>
+
+#include <iomanip>
+
+using namespace std;
+
+double function(const double& x)
+
+{
+
+	double y;
+
+	y = sin(x)* exp(-0.2*x);
+
+	return y;
+
+}
+
+struct Func
+
+{
+
+	double x;
+
+	double y;
+
+};
+
+int main()
+
+{
+
+	// оптимальный пассивный поиск 1
+
+	double a = 2.0, b = 6.0;
+
+	double c, d, ep = 0.1;
+
+	double n = 2 * (b - a) / ep + 1;;
+
+	vector <Func> v(n + 1);
+
+	for (auto i = 0; i <= n; i++)
+
+	{
+
+		v[i].x = (b - a) / (n + 1) * i + a;
+
+		v[i].y = function(v[i].x);
+
+	}
+
+	int k = 1;
+
+	cout << " N x f(x)" << endl << endl;
+
+	for (auto i : v)
+
+	{
+
+		cout << fixed << setprecision(4) << " " << setw(2) << left << k++ << right << setw(12) << i.x << setw(12) << i.y << endl;
+
+	}
+
+	sort(v.begin(), v.end(), [](auto a, auto b) { return a.y < b.y; });
+
+	cout << endl << "min:" << fixed << setprecision(4) << setw(11) << v[0].x << setw(12) << v[0].y << endl;
+
+	cout << endl << endl << endl;
+
+	cout << " N a b x1 x2 f(x1) f(x2) l" << endl << endl;
+
+	double f1, f2;
+
+	n = 1;
+
+	c = a + (b - a) * (3 - sqrt(5.0)) / 2;
+
+	d = a + (b - a) * (sqrt(5.0) - 1) / 2;
+
+	f1 = function(c);
+
+	f2 = function(d);
+
+	ep = b - a;
+
+	k = (1 + sqrt(5.0)) / 2;
+
+	while (ep / 2 >= 0.1)
+
+	{
+
+		if (f1 < f2)
+
+		{
+
+			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << abs(d - c) << endl;
+
+			b = d;
+
+			d = c;
+
+			f2 = f1;
+
+			c = a + (b - a) * (3 - sqrt(5.0)) / 2;
+
+			f1 = function(c);
+
+			ep = b - a;
+
+		}
+
+		else
+
+		{
+
+			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << abs(d - c) << endl;
+
+			a = c;
+
+			c = d;
+
+			f1 = f2;
+
+			d = a + (b - a) * (3 - sqrt(5.0)) / 2;
+
+			f2 = function(d);
+
+			ep = b - a;
+
+		}
+
+	}
+
+	cout << " " << setw(2) << left << n << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << abs(d - c) << endl;
+
+	return 0;
+
+}
