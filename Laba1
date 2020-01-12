@@ -16,7 +16,7 @@ double function(const double& x)
 
 	double y;
 
-	y = sin(x)* exp(-0.2*x);
+	y = sin(x) * exp(-0.2 * x);
 
 	return y;
 
@@ -100,7 +100,7 @@ int main()
 
 		{
 
-			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << abs(d - c) << endl;
+			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << ep << endl;
 
 			b = d;
 
@@ -120,7 +120,7 @@ int main()
 
 		{
 
-			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << abs(d - c) << endl;
+			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << ep << endl;
 
 			a = c;
 
@@ -138,8 +138,50 @@ int main()
 
 	}
 
-	cout << " " << setw(2) << left << n << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << abs(d - c) << endl;
+	//cout << " " << setw(2) << left << n << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << ep << endl;
 
+	for (auto i = 0; i < 4; i++)
+	{
+		if (f1 < f2)
+
+		{
+
+			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << ep << endl;
+
+			b = d;
+
+			d = c;
+
+			f2 = f1;
+
+			c = a + (b - a) * (3 - sqrt(5.0)) / 2;
+
+			f1 = function(c);
+
+			ep = b - a;
+
+		}
+
+		else
+
+		{
+
+			cout << " " << setw(2) << left << n++ << right << setw(12) << a << setw(12) << b << setw(12) << c << setw(12) << d << setw(12) << function(c) << setw(12) << function(d) << setw(12) << ep << endl;
+
+			a = c;
+
+			c = d;
+
+			f1 = f2;
+
+			d = a + (b - a) * (3 - sqrt(5.0)) / 2;
+
+			f2 = function(d);
+
+			ep = b - a;
+
+		}
+	}
 	return 0;
 
 }
