@@ -44,7 +44,7 @@ vector <double> function_noise(const vector<double>& x, const double& a1, const 
 	vector <double> func(101);
 	for (auto i = 0; i <= 100; i++)
 	{
-		func[i] = noise(function(x[i]), a1, a2);
+		func[i] = noise(x[i], a1, a2);
 	}
 	return func;
 }
@@ -55,20 +55,21 @@ vector <double> root_mean_sqare(const vector<double>& foo, vector<double>& alpha
 	int M = (r - 1) / 2;
 	for (auto i = 0; i <= 100; i++)
 	{
-		double sum = 0;
+		double sum = 1;
 		for (auto j = i - M; j <= i + M; j++)
 		{
 			try
 			{
 				foo.at(j);
-				sum += foo[j] * foo[j] * alpha[j + M - i];
+				//sum += foo[j] * foo[j] * alpha[j + M - i];
+				sum *= pow(foo[j], alpha[j + M - i]);
 			}
 			catch (const out_of_range & s)
 			{
-				sum += 0;
+				sum *= 1;
 			}
 		}
-		rms[i] = sqrt(sum);
+		rms[i] = sum;
 	}
 
 	return rms;
@@ -164,8 +165,13 @@ int main()
 	{
 		Fk[i] = function(Xk[i]);
 	}
+	cout << endl << "function" << endl;
+	for (auto i : Fk) cout << i << endl;
 	vector<double> f_noise = function_noise(Fk, a1, a2);
 
+	cout << "noise" << endl;
+	for (auto i : f_noise) cout << i << endl;
+	cout << endl;
 	// r=3
 
 	vector<double> f_filtred;
@@ -199,6 +205,10 @@ int main()
 	sort(data.begin(), data.end(), [](auto a, auto b) {return a.dist < b.dist; });
 	cout << endl << " h*     J        w        d" << endl;
 	cout << setprecision(1) << data[0].h << "   " << setprecision(4) << J(data[0].h, data[0].w, data[0].d) << "   " << data[0].w << "   " << data[0].d << endl;
+	cout << endl << "filtred1" << endl;
+	f_filtred = root_mean_sqare(f_noise, alphamin, r1);
+	for (auto i : f_filtred) cout << i << endl;
+	cout << endl;
 
 	// r = 5
 	Distmin = 999999;
@@ -238,4 +248,8 @@ int main()
 	cout << endl << " h*     J        w        d" << endl;
 	cout << setprecision(1) << data[0].h << "   " << setprecision(4) << J(data[0].h, data[0].w, data[0].d) << "   " << data[0].w << "   " << data[0].d << endl;
 	Distmin = 9000000;
+	cout << endl << "filtred2" << endl;
+	f_filtred = root_mean_sqare(f_noise, alphamin, r1);
+	for (auto i : f_filtred) cout << i << endl;
+	cout << endl;
 }
