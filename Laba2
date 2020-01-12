@@ -101,6 +101,7 @@ int main()
 	}
 
 	cout << endl << endl;
+	double ymin = 99999999.0;
 
 	cout << " q/P 0.9 0.91 0.92 0.93 0.94 0.95 0.96 0.97 0.98 0.99" << endl << endl;
 
@@ -130,13 +131,16 @@ int main()
 
 			sort(begin(functions), end(functions), [](auto a, auto b) { return a.y < b.y; });
 
-			cout << right << setw(8) << functions[0].y << " " << functions[0].x << " ";
+			cout << right << setw(9) << functions[0].y << " ";
+			if (ymin > functions[0].y) ymin = functions[0].y;
 
 		}
 
 		cout << endl;
 
 	}
+	cout << endl << "y min = " << ymin << endl;
+	ymin = 9999999.0;
 
 	cout << endl << endl;
 
@@ -168,12 +172,14 @@ int main()
 
 			sort(begin(functions), end(functions), [](auto a, auto b) { return a.y < b.y; });
 
-			cout << right << setw(9) << functions[0].y << " " << functions[0].x << " ";
+			cout << right << setw(9) << functions[0].y << " ";
+			if (ymin > functions[0].y) ymin = functions[0].y;
 
 		}
 
 		cout << endl;
 
 	}
+	cout << endl << "y min = " << ymin << endl;
 
 }
